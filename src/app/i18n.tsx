@@ -25,6 +25,13 @@ export type Lang =
 
 // Canonical copy lives here. zh-CN is the source of truth; en mirrors it.
 const ZH = {
+  "home.incompatible.title": "有更新，但当前系统不兼容",
+  "home.incompatible.desc": "当前 macOS {current}；最新版要求 macOS {required} 或更高版本。",
+  "home.incompatible.recommended": "当前清单中最新的兼容版本：{version}。可以保留已安装的兼容版本。",
+  "home.incompatible.unknown": "当前清单没有提供已确认兼容的旧版本。可选择其他版本，安装前仍会检查系统要求。",
+  "home.incompatible.blockUpdates": "前往设置，禁止 Codex 自更新",
+  "home.incompatible.choose": "选择兼容版本",
+
   "settings.windows.launchArguments": "Codex 启动参数",
   "settings.windows.launchArgumentsDesc": "用于管理器启动及开始菜单快捷方式。留空使用默认设置；修改后在下次启动生效。支持 --proxy-server 和 --proxy-pac-url。",
   "app.name": "Codex App 管理器",
@@ -188,7 +195,8 @@ const ZH = {
   "versionPicker.current": "当前",
   "versionPicker.repair": "可重新安装修复",
   "versionPicker.target": "将安装",
-  "versionPicker.compatible": "已验证兼容",
+  "versionPicker.compatible": "与所选架构匹配",
+  "versionPicker.unsupportedOs": "当前系统不支持",
   "versionPicker.offline": "从本地安装包安装",
   "versionPicker.offlineBody": "选择从 GitHub Release 下载的文件，本地验签后安装",
   "versionPicker.confirmTitle": "安装 {version}？",
@@ -462,6 +470,13 @@ type Key = keyof typeof ZH;
 export type TKey = Key;
 
 const EN: Record<Key, string> = {
+  "home.incompatible.title": "Update available; macOS is unsupported",
+  "home.incompatible.desc": "Current macOS: {current}. The latest release requires macOS {required} or later.",
+  "home.incompatible.recommended": "Latest compatible version in this feed: {version}. You can keep your compatible installation.",
+  "home.incompatible.unknown": "This feed does not establish a compatible older release. Choose another version; its OS requirement will still be checked before installation.",
+  "home.incompatible.blockUpdates": "Open settings to block Codex self-updates",
+  "home.incompatible.choose": "Choose a compatible version",
+
   "settings.windows.launchArguments": "Codex launch arguments",
   "settings.windows.launchArgumentsDesc": "Used by Manager launches and the Start menu shortcut. Leave empty for defaults; changes apply on the next launch. Supports --proxy-server and --proxy-pac-url.",
   "app.name": "Codex App Manager",
@@ -625,7 +640,8 @@ const EN: Record<Key, string> = {
   "versionPicker.current": "Current",
   "versionPicker.repair": "Repair by reinstalling",
   "versionPicker.target": "To install",
-  "versionPicker.compatible": "Verified compatible",
+  "versionPicker.compatible": "Matches selected architecture",
+  "versionPicker.unsupportedOs": "Unsupported on this OS",
   "versionPicker.offline": "Install from a local package",
   "versionPicker.offlineBody": "Choose a file downloaded from GitHub Releases; it is verified locally before installation",
   "versionPicker.confirmTitle": "Install {version}?",
@@ -896,6 +912,13 @@ const EN: Record<Key, string> = {
 };
 
 const FR: Record<Key, string> = {
+  "home.incompatible.title": "Mise à jour incompatible avec ce macOS",
+  "home.incompatible.desc": "macOS actuel : {current}. La dernière version nécessite macOS {required} ou ultérieur.",
+  "home.incompatible.recommended": "Dernière version compatible du flux : {version}. Vous pouvez conserver votre installation compatible.",
+  "home.incompatible.unknown": "Le flux ne confirme aucune ancienne version compatible. Choisissez une autre version ; sa compatibilité sera vérifiée avant installation.",
+  "home.incompatible.blockUpdates": "Ouvrir les réglages pour bloquer les mises à jour de Codex",
+  "home.incompatible.choose": "Choisir une version compatible",
+
   "settings.windows.launchArguments": "Arguments de lancement de Codex",
   "settings.windows.launchArgumentsDesc": "Utilisés par le gestionnaire et le raccourci du menu Démarrer. Laissez vide pour les valeurs par défaut ; les modifications prennent effet au prochain lancement. Prend en charge --proxy-server et --proxy-pac-url.",
   "app.name": "Gestionnaire Codex",
@@ -1059,7 +1082,8 @@ const FR: Record<Key, string> = {
   "versionPicker.current": "Actuelle",
   "versionPicker.repair": "Réparer par réinstallation",
   "versionPicker.target": "À installer",
-  "versionPicker.compatible": "Compatibilité vérifiée",
+  "versionPicker.compatible": "Correspond à l’architecture sélectionnée",
+  "versionPicker.unsupportedOs": "Système non pris en charge",
   "versionPicker.offline": "Installer depuis un paquet local",
   "versionPicker.offlineBody": "Choisissez un fichier téléchargé depuis GitHub Releases ; il sera vérifié localement avant l’installation",
   "versionPicker.confirmTitle": "Installer {version} ?",
@@ -1330,6 +1354,13 @@ const FR: Record<Key, string> = {
 };
 
 const ZH_TW: Record<Key, string> = {
+  "home.incompatible.title": "有更新，但目前系統不相容",
+  "home.incompatible.desc": "目前 macOS {current}；最新版需要 macOS {required} 或更新版本。",
+  "home.incompatible.recommended": "目前清單中最新的相容版本：{version}。可以保留已安裝的相容版本。",
+  "home.incompatible.unknown": "目前清單沒有已確認相容的舊版本。可選擇其他版本，安裝前仍會檢查系統需求。",
+  "home.incompatible.blockUpdates": "前往設定，禁止 Codex 自動更新",
+  "home.incompatible.choose": "選擇相容版本",
+
   "settings.windows.launchArguments": "Codex 啟動參數",
   "settings.windows.launchArgumentsDesc": "用於管理器啟動及開始功能表捷徑。留空使用預設設定；修改後於下次啟動生效。支援 --proxy-server 與 --proxy-pac-url。",
   "app.name": "Codex App 管理員",
@@ -1493,7 +1524,8 @@ const ZH_TW: Record<Key, string> = {
   "versionPicker.current": "目前",
   "versionPicker.repair": "可重新安裝修復",
   "versionPicker.target": "將安裝",
-  "versionPicker.compatible": "已驗證相容",
+  "versionPicker.compatible": "與所選架構相符",
+  "versionPicker.unsupportedOs": "目前系統不支援",
   "versionPicker.offline": "從本機安裝包安裝",
   "versionPicker.offlineBody": "選擇從 GitHub Release 下載的檔案，本機驗證簽章後安裝",
   "versionPicker.confirmTitle": "安裝 {version}？",
@@ -1775,6 +1807,13 @@ const ZH_TW: Record<Key, string> = {
 };
 
 const DE: Record<Key, string> = {
+  "home.incompatible.title": "Update verfügbar, macOS nicht unterstützt",
+  "home.incompatible.desc": "Aktuelles macOS: {current}. Die neueste Version benötigt macOS {required} oder neuer.",
+  "home.incompatible.recommended": "Neueste kompatible Version im Feed: {version}. Sie können Ihre kompatible Installation behalten.",
+  "home.incompatible.unknown": "Der Feed bestätigt keine ältere kompatible Version. Wählen Sie eine andere Version; die Systemanforderung wird vor der Installation geprüft.",
+  "home.incompatible.blockUpdates": "Einstellungen öffnen und Codex-Selbstupdates sperren",
+  "home.incompatible.choose": "Kompatible Version wählen",
+
   "settings.windows.launchArguments": "Codex-Startparameter",
   "settings.windows.launchArgumentsDesc": "Gelten für Starts über den Manager und die Startmenüverknüpfung. Leer lassen für Standardwerte; Änderungen gelten beim nächsten Start. Unterstützt --proxy-server und --proxy-pac-url.",
   "app.name": "Codex App Manager",
@@ -1938,7 +1977,8 @@ const DE: Record<Key, string> = {
   "versionPicker.current": "Aktuell",
   "versionPicker.repair": "Durch Neuinstallation reparieren",
   "versionPicker.target": "Zu installieren",
-  "versionPicker.compatible": "Kompatibilität geprüft",
+  "versionPicker.compatible": "Passt zur gewählten Architektur",
+  "versionPicker.unsupportedOs": "Auf diesem System nicht unterstützt",
   "versionPicker.offline": "Aus lokalem Paket installieren",
   "versionPicker.offlineBody": "Wähle eine aus GitHub Releases geladene Datei; sie wird vor der Installation lokal geprüft",
   "versionPicker.confirmTitle": "{version} installieren?",
@@ -2220,6 +2260,13 @@ const DE: Record<Key, string> = {
 };
 
 const KO: Record<Key, string> = {
+  "home.incompatible.title": "업데이트가 있지만 macOS가 호환되지 않음",
+  "home.incompatible.desc": "현재 macOS: {current}. 최신 버전은 macOS {required} 이상이 필요합니다.",
+  "home.incompatible.recommended": "목록에서 확인된 최신 호환 버전: {version}. 현재 호환 버전을 유지할 수 있습니다.",
+  "home.incompatible.unknown": "목록에 확인된 이전 호환 버전이 없습니다. 다른 버전을 선택하면 설치 전에 시스템 요구 사항을 확인합니다.",
+  "home.incompatible.blockUpdates": "설정에서 Codex 자체 업데이트 차단",
+  "home.incompatible.choose": "호환 버전 선택",
+
   "settings.windows.launchArguments": "Codex 실행 인수",
   "settings.windows.launchArgumentsDesc": "관리자 실행과 시작 메뉴 바로 가기에 적용됩니다. 기본값을 사용하려면 비워 두세요. 변경은 다음 실행부터 적용됩니다. --proxy-server 및 --proxy-pac-url을 지원합니다.",
   "app.name": "Codex App 관리자",
@@ -2383,7 +2430,8 @@ const KO: Record<Key, string> = {
   "versionPicker.current": "현재",
   "versionPicker.repair": "재설치하여 복구",
   "versionPicker.target": "설치 예정",
-  "versionPicker.compatible": "호환성 확인됨",
+  "versionPicker.compatible": "선택한 아키텍처와 일치",
+  "versionPicker.unsupportedOs": "현재 시스템에서 지원되지 않음",
   "versionPicker.offline": "로컬 패키지에서 설치",
   "versionPicker.offlineBody": "GitHub Releases에서 다운로드한 파일을 선택하면 설치 전에 로컬에서 서명을 확인합니다",
   "versionPicker.confirmTitle": "{version}을(를) 설치할까요?",
@@ -2664,6 +2712,13 @@ const KO: Record<Key, string> = {
 };
 
 const JA: Record<Key, string> = {
+  "home.incompatible.title": "更新がありますが、この macOS は非対応です",
+  "home.incompatible.desc": "現在の macOS: {current}。最新版には macOS {required} 以降が必要です。",
+  "home.incompatible.recommended": "配信一覧で確認できる最新の対応版: {version}。現在の対応版をそのまま使用できます。",
+  "home.incompatible.unknown": "配信一覧には対応が確認できた旧版がありません。別のバージョンを選ぶと、インストール前にシステム要件を確認します。",
+  "home.incompatible.blockUpdates": "設定を開いて Codex の自動更新を停止",
+  "home.incompatible.choose": "対応バージョンを選択",
+
   "settings.windows.launchArguments": "Codex 起動引数",
   "settings.windows.launchArgumentsDesc": "管理アプリからの起動とスタートメニューのショートカットに適用されます。空欄で既定値を使用し、変更は次回起動時に反映されます。--proxy-server と --proxy-pac-url に対応。",
   "app.name": "Codex App マネージャー",
@@ -2825,7 +2880,8 @@ const JA: Record<Key, string> = {
   "versionPicker.current": "現在",
   "versionPicker.repair": "再インストールして修復",
   "versionPicker.target": "インストール予定",
-  "versionPicker.compatible": "互換性を確認済み",
+  "versionPicker.compatible": "選択したアーキテクチャに対応",
+  "versionPicker.unsupportedOs": "このシステムでは非対応",
   "versionPicker.offline": "ローカルパッケージからインストール",
   "versionPicker.offlineBody": "GitHub Releases からダウンロードしたファイルを選択し、ローカルで署名を検証してからインストールします",
   "versionPicker.confirmTitle": "{version} をインストールしますか？",
@@ -3089,6 +3145,13 @@ const JA: Record<Key, string> = {
 };
 
 const RU: Record<Key, string> = {
+  "home.incompatible.title": "Обновление несовместимо с этой macOS",
+  "home.incompatible.desc": "Текущая macOS: {current}. Последней версии нужна macOS {required} или новее.",
+  "home.incompatible.recommended": "Последняя совместимая версия в ленте: {version}. Можно сохранить установленную совместимую версию.",
+  "home.incompatible.unknown": "В ленте нет подтверждённой совместимой старой версии. Выберите другую; требования ОС будут проверены до установки.",
+  "home.incompatible.blockUpdates": "Открыть настройки и запретить самообновление Codex",
+  "home.incompatible.choose": "Выбрать совместимую версию",
+
   "settings.windows.launchArguments": "Аргументы запуска Codex",
   "settings.windows.launchArgumentsDesc": "Используются при запуске из менеджера и через ярлык в меню «Пуск». Оставьте пустым для настроек по умолчанию; изменения действуют со следующего запуска. Поддерживаются --proxy-server и --proxy-pac-url.",
   "app.name": "Менеджер Codex App",
@@ -3250,7 +3313,8 @@ const RU: Record<Key, string> = {
   "versionPicker.current": "Текущая",
   "versionPicker.repair": "Исправить переустановкой",
   "versionPicker.target": "Будет установлена",
-  "versionPicker.compatible": "Совместимость проверена",
+  "versionPicker.compatible": "Соответствует выбранной архитектуре",
+  "versionPicker.unsupportedOs": "Не поддерживается этой ОС",
   "versionPicker.offline": "Установить из локального пакета",
   "versionPicker.offlineBody": "Выберите файл из GitHub Releases; перед установкой подпись будет проверена локально",
   "versionPicker.confirmTitle": "Установить {version}?",
@@ -3514,6 +3578,13 @@ const RU: Record<Key, string> = {
 };
 
 const AR: Record<Key, string> = {
+  "home.incompatible.title": "يتوفر تحديث غير متوافق مع macOS الحالي",
+  "home.incompatible.desc": "macOS الحالي: {current}. يتطلب أحدث إصدار macOS {required} أو أحدث.",
+  "home.incompatible.recommended": "أحدث إصدار متوافق في القائمة: {version}. يمكنك الاحتفاظ بالتثبيت المتوافق الحالي.",
+  "home.incompatible.unknown": "لا تؤكد القائمة وجود إصدار قديم متوافق. اختر إصدارًا آخر؛ سيُفحص متطلب النظام قبل التثبيت.",
+  "home.incompatible.blockUpdates": "فتح الإعدادات لمنع التحديث الذاتي لـ Codex",
+  "home.incompatible.choose": "اختيار إصدار متوافق",
+
   "settings.windows.launchArguments": "وسائط تشغيل Codex",
   "settings.windows.launchArgumentsDesc": "تُستخدم عند التشغيل من المدير واختصار قائمة ابدأ. اتركها فارغة لاستخدام الإعدادات الافتراضية؛ تسري التغييرات عند التشغيل التالي. تدعم --proxy-server و --proxy-pac-url.",
   "app.name": "مدير تطبيق Codex",
@@ -3675,7 +3746,8 @@ const AR: Record<Key, string> = {
   "versionPicker.current": "الحالي",
   "versionPicker.repair": "إصلاح بإعادة التثبيت",
   "versionPicker.target": "سيتم تثبيته",
-  "versionPicker.compatible": "تم التحقق من التوافق",
+  "versionPicker.compatible": "يطابق البنية المحددة",
+  "versionPicker.unsupportedOs": "غير مدعوم على هذا النظام",
   "versionPicker.offline": "التثبيت من حزمة محلية",
   "versionPicker.offlineBody": "اختر ملفاً تم تنزيله من GitHub Releases؛ وسيتم التحقق من توقيعه محلياً قبل التثبيت",
   "versionPicker.confirmTitle": "تثبيت {version}؟",
@@ -3939,6 +4011,13 @@ const AR: Record<Key, string> = {
 };
 
 const ES: Record<Key, string> = {
+  "home.incompatible.title": "Actualización incompatible con este macOS",
+  "home.incompatible.desc": "macOS actual: {current}. La última versión requiere macOS {required} o posterior.",
+  "home.incompatible.recommended": "Última versión compatible en esta lista: {version}. Puedes conservar la instalación compatible.",
+  "home.incompatible.unknown": "La lista no confirma una versión anterior compatible. Elige otra versión; se comprobará el requisito del sistema antes de instalarla.",
+  "home.incompatible.blockUpdates": "Abrir ajustes para bloquear las actualizaciones de Codex",
+  "home.incompatible.choose": "Elegir una versión compatible",
+
   "settings.windows.launchArguments": "Argumentos de inicio de Codex",
   "settings.windows.launchArgumentsDesc": "Se usan al iniciar desde el gestor y el acceso directo del menú Inicio. Deja vacío para usar los valores predeterminados; los cambios se aplican al próximo inicio. Admite --proxy-server y --proxy-pac-url.",
   "app.name": "Codex App Manager",
@@ -4100,7 +4179,8 @@ const ES: Record<Key, string> = {
   "versionPicker.current": "Actual",
   "versionPicker.repair": "Reparar reinstalando",
   "versionPicker.target": "Se instalará",
-  "versionPicker.compatible": "Compatibilidad verificada",
+  "versionPicker.compatible": "Coincide con la arquitectura elegida",
+  "versionPicker.unsupportedOs": "No compatible con este sistema",
   "versionPicker.offline": "Instalar desde un paquete local",
   "versionPicker.offlineBody": "Elige un archivo descargado de GitHub Releases; se verificará localmente antes de instalarlo",
   "versionPicker.confirmTitle": "¿Instalar {version}?",
@@ -4364,6 +4444,13 @@ const ES: Record<Key, string> = {
 };
 
 const PT_BR: Record<Key, string> = {
+  "home.incompatible.title": "Atualização incompatível com este macOS",
+  "home.incompatible.desc": "macOS atual: {current}. A versão mais recente exige macOS {required} ou posterior.",
+  "home.incompatible.recommended": "Versão compatível mais recente nesta lista: {version}. Pode manter a instalação compatível.",
+  "home.incompatible.unknown": "A lista não confirma uma versão anterior compatível. Escolha outra versão; o requisito do sistema será verificado antes da instalação.",
+  "home.incompatible.blockUpdates": "Abrir definições para bloquear as atualizações do Codex",
+  "home.incompatible.choose": "Escolher versão compatível",
+
   "settings.windows.launchArguments": "Argumentos de inicialização do Codex",
   "settings.windows.launchArgumentsDesc": "Usados ao iniciar pelo gerenciador e pelo atalho do menu Iniciar. Deixe vazio para usar os padrões; as alterações valem na próxima inicialização. Suporta --proxy-server e --proxy-pac-url.",
   "app.name": "Gerenciador do Codex App",
@@ -4525,7 +4612,8 @@ const PT_BR: Record<Key, string> = {
   "versionPicker.current": "Atual",
   "versionPicker.repair": "Reparar reinstalando",
   "versionPicker.target": "Será instalada",
-  "versionPicker.compatible": "Compatibilidade verificada",
+  "versionPicker.compatible": "Corresponde à arquitetura selecionada",
+  "versionPicker.unsupportedOs": "Não suportado neste sistema",
   "versionPicker.offline": "Instalar de um pacote local",
   "versionPicker.offlineBody": "Escolha um arquivo baixado do GitHub Releases; ele será verificado localmente antes da instalação",
   "versionPicker.confirmTitle": "Instalar {version}?",
