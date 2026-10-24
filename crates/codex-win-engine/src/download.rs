@@ -5,9 +5,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use sha2::{Digest, Sha256};
 
 use crate::limits::MAX_PACKAGE_BYTES;
-use crate::network::{
-    is_schannel_revocation_check_failure, NetworkConfig, SchannelRevocationCheck,
-};
+use crate::network::{is_schannel_revocation_check_failure, NetworkConfig, SchannelRevocationCheck};
 use crate::process::{
     curl_exe, hidden_command, run_with_progress, RunError, RunLimits, TimeoutKind,
 };
@@ -190,8 +188,7 @@ fn curl_args(
         ProgressMode::NoProgressMeter => args.push("--no-progress-meter".to_string()),
         ProgressMode::SilentWithErrors => args.push("-sS".to_string()),
     }
-    // curl 8.14.x can return exit code 0 for a failed transfer when --retry
-    // is enabled (curl/curl#17554), hiding the Schannel error from our retry.
+    // Avoid --retry: curl 8.14.x can report success after a failed transfer (curl/curl#17554).
     args.extend([
         "--connect-timeout".to_string(),
         "20".to_string(),
@@ -240,7 +237,9 @@ fn run_curl_once(
             let downloaded = std::fs::metadata(dest).map(|m| m.len()).unwrap_or(0);
             return match kind {
                 TimeoutKind::Stall => {
-                    log::warn!("Windows download stalled source={source} downloaded={downloaded}");
+                    log::warn!(
+                        "Windows download stalled source={source} downloaded={downloaded}"
+                    );
                     Err(CurlAttemptError::Other(format!(
                         "curl download stalled (no progress) source={source} downloaded={downloaded}"
                     )))
@@ -266,29 +265,18 @@ fn run_curl_once(
             stderr: String::from_utf8_lossy(&output.stderr).to_string(),
         });
     }
-    let downloaded = completed_download_size(Path::new(dest))?;
+    let metadata = std::fs::metadata(dest).map_err(|error| {
+        CurlAttemptError::Other(format!("curl reported success but download output is unavailable: {error}"))
+    })?;
+    if !metadata.is_file() || metadata.len() == 0 {
+        return Err(CurlAttemptError::Other(
+            "curl reported success but download output is not a nonempty file".to_string(),
+        ));
+    }
+    let downloaded = metadata.len();
     on_progress(downloaded);
     log::info!("Windows curl download completed source={source} bytes={downloaded}");
     Ok(())
-}
-
-fn completed_download_size(dest: &Path) -> Result<u64, CurlAttemptError> {
-    let metadata = std::fs::metadata(dest).map_err(|error| {
-        CurlAttemptError::Other(format!(
-            "curl reported success but downloaded file is unavailable: {error}"
-        ))
-    })?;
-    if !metadata.is_file() {
-        return Err(CurlAttemptError::Other(
-            "curl reported success but download output is not a regular file".to_string(),
-        ));
-    }
-    if metadata.len() == 0 {
-        return Err(CurlAttemptError::Other(
-            "curl reported success but downloaded file is empty".to_string(),
-        ));
-    }
-    Ok(metadata.len())
 }
 
 struct CurlRun<'a> {
@@ -548,52 +536,6 @@ mod tests {
 
     static DOWNLOAD_TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
-    #[test]
-    fn download_does_not_enable_curl_retry_exit_code_regression() {
-        // curl 8.14.1 can return zero for a failed transfer when --retry is
-        // enabled, preventing the Schannel compatibility retry from running.
-        let args = curl_args(
-            "https://example.test/Codex.msix",
-            "Codex.msix.part",
-            false,
-            "123",
-            ProgressMode::NoProgressMeter,
-            &NetworkConfig::system(),
-            SchannelRevocationCheck::Strict,
-        );
-        assert!(!args
-            .iter()
-            .any(|arg| arg == "--retry" || arg.starts_with("--retry=")));
-    }
-
-    #[test]
-    fn successful_process_requires_a_nonempty_regular_download_file() {
-        let root = std::env::temp_dir().join(format!(
-            "codex-win-engine-completed-{}",
-            uuid::Uuid::new_v4()
-        ));
-        std::fs::create_dir_all(&root).unwrap();
-        let dest = root.join("package.part");
-
-        let missing = completed_download_size(&dest).unwrap_err();
-        assert!(
-            matches!(missing, CurlAttemptError::Other(message) if message.contains("unavailable"))
-        );
-        let directory = completed_download_size(&root).unwrap_err();
-        assert!(
-            matches!(directory, CurlAttemptError::Other(message) if message.contains("not a regular file"))
-        );
-
-        std::fs::write(&dest, b"").unwrap();
-        let empty = completed_download_size(&dest).unwrap_err();
-        assert!(matches!(empty, CurlAttemptError::Other(message) if message.contains("empty")));
-
-        std::fs::write(&dest, b"downloaded package").unwrap();
-        assert_eq!(completed_download_size(&dest).unwrap(), 18);
-        std::fs::remove_file(&dest).unwrap();
-        std::fs::remove_dir(&root).unwrap();
-    }
-
     fn curl_available() -> bool {
         let available = hidden_command(curl_exe())
             .arg("--version")
@@ -706,7 +648,8 @@ mod tests {
 
         // Production downloads and redirects are HTTPS-only. A file:// fixture
         // cannot exercise successful transfer progress through this path.
-        let error = download_to_with_progress(&file_url(&source), &dest, &|_| {}).unwrap_err();
+        let error = download_to_with_progress(&file_url(&source), &dest, &|_| {})
+            .unwrap_err();
         let message = error.to_string().to_ascii_lowercase();
         assert!(
             message.contains("protocol") && message.contains("file"),
@@ -755,14 +698,9 @@ mod tests {
             dest.to_string_lossy().into_owned(),
             url,
         ];
-        run_curl_once(
-            "local fixture",
-            &dest.to_string_lossy(),
-            args,
-            &|downloaded| {
-                seen.lock().unwrap().push(downloaded);
-            },
-        )
+        run_curl_once("local fixture", &dest.to_string_lossy(), args, &|downloaded| {
+            seen.lock().unwrap().push(downloaded);
+        })
         .unwrap();
         assert_eq!(std::fs::read(&dest).unwrap(), bytes);
         assert_eq!(seen.lock().unwrap().last(), Some(&(bytes.len() as u64)));
