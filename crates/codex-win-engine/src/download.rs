@@ -706,4 +706,35 @@ mod tests {
         assert_eq!(seen.lock().unwrap().last(), Some(&(bytes.len() as u64)));
         std::fs::remove_dir_all(root).unwrap();
     }
+
+    #[test]
+    fn curl_success_without_a_nonempty_output_is_rejected() {
+        let _lock = DOWNLOAD_TEST_LOCK.lock().unwrap();
+        if !curl_available() {
+            return;
+        }
+        let root = std::env::temp_dir().join(format!(
+            "codex-win-engine-missing-output-{}",
+            uuid::Uuid::new_v4()
+        ));
+        std::fs::create_dir_all(&root).unwrap();
+        let missing = root.join("missing.part");
+        let empty = root.join("empty.part");
+        std::fs::write(&empty, []).unwrap();
+
+        for dest in [&missing, &empty, &root] {
+            // curl --version exits successfully without producing an output
+            // file, reproducing the misleading exit status from curl 8.14.x.
+            let error = run_curl_once(
+                "missing output fixture",
+                &dest.to_string_lossy(),
+                vec!["--disable".into(), "--version".into()],
+                &|_| {},
+            )
+            .unwrap_err();
+            assert!(matches!(error, CurlAttemptError::Other(_)), "{error:?}");
+        }
+        assert!(!missing.exists());
+        std::fs::remove_dir_all(root).unwrap();
+    }
 }

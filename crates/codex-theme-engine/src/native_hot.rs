@@ -247,7 +247,8 @@ const ENSURE_API_JS_TEMPLATE: &str = r#"(async () => {
     for (const url of candidates) {
       const text = await fetchText(url);
       if (text == null) continue;
-      const nativeSettings = text.includes(".settings.read(") && text.includes(".settings.write(");
+      const nativeSettings = /\.\s*settings\s*\.\s*read\s*\(/.test(text) &&
+        /\.\s*settings\s*\.\s*write\s*\(/.test(text);
       if (!text.includes("set-setting") && !nativeSettings) continue;
       if (adapter === "26.901.20858+") {
         // Only import an app settings candidate, never every loaded chunk.
